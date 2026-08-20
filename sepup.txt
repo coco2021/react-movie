@@ -1,0 +1,14 @@
+npm create vite@latest
+
+//install dependency
+
+cd react-app
+
+npm install  
+or
+npm i
+
+//run app
+npm run dev
+
+
