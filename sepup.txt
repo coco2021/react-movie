@@ -12,3 +12,7 @@ npm i
 npm run dev
 
 
+//tailwind
+npm install tailwindcss @tailwindcss/vite
+
+
