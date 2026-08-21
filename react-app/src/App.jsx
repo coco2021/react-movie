@@ -3,6 +3,7 @@
 import React from 'react'
 import Search from './components/Search'
 import {useEffect, useState} from 'react'
+import Spinner from './components/Spinner'
 
 //API - Application Programming Interfaces  - a set of rules that allows one 
 // software appllication (react) to talk to another (db, server in somewhere)
@@ -30,7 +31,10 @@ const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
+  //useActionState
+  //useOptimistic
+  //useFormStatus
+  //useTransition
 
 
   const fetchMovies = async () => {
@@ -98,11 +102,15 @@ const App = () => {
         {/* <h1 className="text-white">{searchTerm}</h1> */}
 
         <section className="all-movies">
-          <h2>All Movies</h2>
+          <h2 className="mt-4">All Movies</h2>
 
           {/* {errorMessage && <p className="text-red-500">{errorMessage}</p>} */}
 
-          {isLoading ? (<p className="text-white">Loading...</p>
+          {/* {isLoading ? (<p className="text-white">Loading...</p> */}
+
+          {isLoading ? (
+            <Spinner />
+
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           ) : (
