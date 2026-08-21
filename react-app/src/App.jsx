@@ -4,6 +4,7 @@ import React from 'react'
 import Search from './components/Search'
 import {useEffect, useState} from 'react'
 import Spinner from './components/Spinner'
+import MovieCard from './components/MovieCard';
 
 //API - Application Programming Interfaces  - a set of rules that allows one 
 // software appllication (react) to talk to another (db, server in somewhere)
@@ -79,6 +80,8 @@ const App = () => {
     }
   }
 
+//---end fetchMovies ----------------------------------------------------
+
   useEffect(()=>{
     fetchMovies();
   }, [])  // run only once when this component loads
@@ -119,7 +122,9 @@ const App = () => {
             {/* (movie)=>{return } */}
 
               {movieList.map((movie) => (
-                <p key={movie.id} className='text-white'>{movie.title}</p>
+                // <p key={movie.id} className='text-white'>{movie.title}</p>
+                <MovieCard key={movie.id} movie={movie} />
+
               ))}
             
             </ul>
