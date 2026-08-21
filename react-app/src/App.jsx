@@ -5,6 +5,7 @@ import Search from './components/Search'
 import {useEffect, useState} from 'react'
 import Spinner from './components/Spinner'
 import MovieCard from './components/MovieCard';
+import { useDebounce} from 'react-use'
 
 //API - Application Programming Interfaces  - a set of rules that allows one 
 // software appllication (react) to talk to another (db, server in somewhere)
@@ -32,6 +33,22 @@ const App = () => {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+// handle debounce --------------
+// https://levelup.gitconnected.com/debounce-in-javascript-improve-your-applications-performance-5b01855e086
+// https://github.com/streamich/react-use/blob/master/docs/useDebounce.md
+// install react-use
+// https://www.npmjs.com/package/react-use
+// npm i react-use
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+
+  // 500 ms -> wait for 500 milliseconds before changing the value in the state -> not api call every letter typed 
+  //      -> prevent making too many request by waiting for the user to stop typing for 500 ms (30 seconds)
+  //-> improve performance
+  useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
+  //-> fetchMovies(debouncedSearchTerm)
+
+
+//---------------------------
   //useActionState
   //useOptimistic
   //useFormStatus
@@ -97,9 +114,13 @@ const App = () => {
   // }, [])
 
 // run when searchTerm changes
-  useEffect(()=>{
-    fetchMovies(searchTerm);
-  }, [searchTerm]) //dependency -> searchTerm
+  // useEffect(()=>{
+  //   fetchMovies(searchTerm);
+  // }, [searchTerm]) //dependency -> searchTerm
+
+  useEffect( ()=>{
+      fetchMovies(debouncedSearchTerm)
+  }, [debouncedSearchTerm])
 
 
   return (
