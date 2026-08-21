@@ -38,13 +38,22 @@ const App = () => {
   //useTransition
 
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query = '') => {
     
     setIsLoading(true);
     setErrorMessage('');
 
     try{
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`; //descending order
+      // const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`; //descending order
+
+      const endpoint = query
+        // ?  `${API_BASE_URL}/search/movie?query=${query}`
+
+        // make sure this query is optimized to be displayed in thd URL or to be called as an API call
+        // encodeURI - Encodes a text string as a valid Uniform Resource Identifier (URI)
+        //e.g. some specific characters in query, -> will process properly
+        ?  `${API_BASE_URL}/search/movie?query=${encodeURI(query)}`
+        :  `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`; 
 
       //fetch - js built-in func -> http request / response
       const response = await fetch(endpoint, API_OPTIONS);
@@ -82,9 +91,15 @@ const App = () => {
 
 //---end fetchMovies ----------------------------------------------------
 
+// [] -> run only once when this component loads
+  // useEffect(()=>{
+  //   fetchMovies(searchTerm);
+  // }, [])
+
+// run when searchTerm changes
   useEffect(()=>{
-    fetchMovies();
-  }, [])  // run only once when this component loads
+    fetchMovies(searchTerm);
+  }, [searchTerm]) //dependency -> searchTerm
 
 
   return (

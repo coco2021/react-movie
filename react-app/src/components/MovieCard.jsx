@@ -1,6 +1,8 @@
 import React from 'react'
 
-// movie props ref-> https://developer.themoviedb.org/reference/discover-movie
+// movie props ref->
+// discover movie -  https://developer.themoviedb.org/reference/discover-movie
+// search movie - https://developer.themoviedb.org/reference/search-movie
 
 //destructure 
 const MovieCard = ({movie:
