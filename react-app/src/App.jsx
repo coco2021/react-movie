@@ -14,7 +14,7 @@ import { getTrendingMovies, updateSearchCount } from './appwrite';
 // const API_BASE_URL = 'https://api.themoviedb.org/3/discover/movie';
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 
-const API_KEY = import.meta.env.VITE_TMBD_API_KEY; // VITE_TMBD_API_KEY in .env.local
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY; // VITE_TMDB_API_KEY in .env.local
 
 const API_OPTIONS = {
   method: 'GET',

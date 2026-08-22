@@ -33,24 +33,6 @@ jobs:
         working-directory: react-app
         run: npm ci
 
-      - name: Check TMDB token
-        env:
-          VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
-        run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            "https://api.themoviedb.org/3/configuration" \
-            -H "Authorization: Bearer $VITE_TMDB_API_KEY" \
-            -H "accept: application/json")
-
-          if [ "$STATUS" != "200" ]; then
-            echo "TMDB rejected the GitHub token. HTTP status: $STATUS"
-            exit 1
-          fi
-
-          echo "TMDB accepted the GitHub token"
-
-
-
       - name: Build
         working-directory: react-app
         env:
@@ -58,12 +40,7 @@ jobs:
           VITE_APPWRITE_PROJECT_ID: ${{ secrets.VITE_APPWRITE_PROJECT_ID }}
           VITE_APPWRITE_DATABASE_ID: ${{ secrets.VITE_APPWRITE_DATABASE_ID }}
           VITE_APPWRITE_COLLECTION_ID: ${{ secrets.VITE_APPWRITE_COLLECTION_ID }}
-        run: |
-          echo "VITE_TMDB_API_KEY=$VITE_TMDB_API_KEY" > .env.production
-          echo "VITE_APPWRITE_PROJECT_ID=$VITE_APPWRITE_PROJECT_ID" >> .env.production
-          echo "VITE_APPWRITE_DATABASE_ID=$VITE_APPWRITE_DATABASE_ID" >> .env.production
-          echo "VITE_APPWRITE_COLLECTION_ID=$VITE_APPWRITE_COLLECTION_ID" >> .env.production
-          npm run build
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
