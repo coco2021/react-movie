@@ -33,6 +33,22 @@ jobs:
         working-directory: react-app
         run: npm ci
 
+      - name: Check TMDB token
+        env:
+          VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
+        run: |
+          if [ -z "$VITE_TMDB_API_KEY" ]; then
+            echo "TMDB token is missing"
+            exit 1
+          fi
+          if [[ "$VITE_TMDB_API_KEY" != eyJ* ]]; then
+            echo "TMDB token does not start with eyJ"
+            exit 1
+          fi
+          echo "TMDB token is available"
+
+
+
       - name: Build
         working-directory: react-app
         env:
