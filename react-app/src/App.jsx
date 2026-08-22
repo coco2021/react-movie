@@ -159,7 +159,7 @@ const loadTrendingMovies = async () => {
 
   useEffect( () =>{
     loadTrendingMovies();
-  }, [trendingMovies])
+  }, [])
 
   return (
 
