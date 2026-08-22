@@ -37,15 +37,17 @@ jobs:
         env:
           VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
         run: |
-          if [ -z "$VITE_TMDB_API_KEY" ]; then
-            echo "TMDB token is missing"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://api.themoviedb.org/3/configuration" \
+            -H "Authorization: Bearer $VITE_TMDB_API_KEY" \
+            -H "accept: application/json")
+
+          if [ "$STATUS" != "200" ]; then
+            echo "TMDB rejected the GitHub token. HTTP status: $STATUS"
             exit 1
           fi
-          if [[ "$VITE_TMDB_API_KEY" != eyJ* ]]; then
-            echo "TMDB token does not start with eyJ"
-            exit 1
-          fi
-          echo "TMDB token is available"
+
+          echo "TMDB accepted the GitHub token"
 
 
 
